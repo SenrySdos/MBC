@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/book_list_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/book_list.thumbail"
+            style="@style/book_list_row_thumbail"
+            android:layout_width="@dimen/book_list.thumbail_width"
+            android:layout_marginEnd="17dp"
+            android:layout_marginStart="7dp"
+            android:layout_weight="0" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <mbc.sdos.es.mbc.view.widget.CustomFontTextView
+                android:id="@+id/book_list.title"
+                style="@style/book_list_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <mbc.sdos.es.mbc.view.widget.CustomFontTextView
+                android:id="@+id/book_list.author"
+                style="@style/book_list_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/book_list.title"
+                android:layout_weight="0"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <mbc.sdos.es.mbc.view.widget.CustomFontTextView
+                android:id="@+id/book_list.category"
+                style="@style/book_list_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/book_list.author"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1" />
+
+            <mbc.sdos.es.mbc.view.widget.CustomFontTextView
+                android:id="@+id/book_list.read_more"
+                style="@style/book_list_read_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/book_list.read_more" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/book_list.fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom"
+            android:layout_weight="0"
+            android:src="@drawable/heart_empty" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/book_list_separator" />
+</LinearLayout>

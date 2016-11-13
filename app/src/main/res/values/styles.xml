@@ -1,0 +1,76 @@
+<resources>
+
+    <!-- BaseDomain application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">@color/primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/accent</item>
+        <!-- navigation icon color -->
+        <item name="colorControlNormal">@color/book_list_default</item>
+        <item name="android:windowBackground">@color/app_background</item>
+    </style>
+
+    <!-- SELECT STORE -->
+    <style name="MainFont">
+        <!--<item name="fontName">Roboto-Medium.ttf</item>-->
+        <item name="android:textColor">@color/book_list_default</item>
+    </style>
+
+    <!-- BOTTOMBAR -->
+    <style name="BottomBarMainFont" parent="MainFont">
+        <item name="android:textSize">@dimen/text_min</item>
+    </style>
+
+    <!-- TOOLBAR -->
+    <style name="toolbar_text" parent="MainFont">
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="fontName">@string/tipography_1_0</item>
+    </style>
+
+    <style name="book_list_title">
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:textColor">@color/book_list_default</item>
+        <item name="fontName">@string/tipography_2_0</item>
+    </style>
+
+    <style name="book_list_author">
+        <item name="android:textSize">@dimen/text_middle</item>
+        <item name="android:textColor">@color/book_list_author</item>
+        <item name="fontName">@string/tipography_2_1</item>
+    </style>
+
+    <style name="book_list_category">
+        <item name="android:textSize">@dimen/text_little</item>
+        <item name="android:textColor">@color/book_list_default</item>
+        <item name="fontName">@string/tipography_1_2</item>
+
+    </style>
+
+    <style name="book_list_read_more">
+        <item name="android:textSize">@dimen/text_little</item>
+        <item name="android:textColor">@color/book_list_default</item>
+        <item name="fontName">@string/tipography_2_1</item>
+    </style>
+
+
+    <!--Row BookDomain list-->
+    <style name="book_list_row">
+        <item name="android:paddingBottom">@dimen/book_list_row.padding_bottom</item>
+        <item name="android:paddingTop">@dimen/book_list_row.padding_top</item>
+        <item name="android:paddingLeft">@dimen/book_list_row.padding_left</item>
+        <item name="android:paddingRight">@dimen/book_list_row.padding_right</item>
+    </style>
+
+    <style name="book_list_row_thumbail">
+        <item name="android:layout_width">@dimen/book_list.thumbail_width</item>
+        <item name="android:layout_height">@dimen/book_list.thumbail_height</item>
+
+    </style>
+
+</resources>

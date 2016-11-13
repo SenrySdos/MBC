@@ -1,0 +1,197 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.21.5'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'io.fabric'
+apply from: "$rootDir/utils.gradle"
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "23.0.3"
+    def appname = "MBC"
+
+    defaultConfig {
+        applicationId "es.sdos.mbc"
+        minSdkVersion 17
+        targetSdkVersion 23
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    productFlavors {
+        local {
+            versionCode 1
+            versionName "0.0.1"
+            def flavorName = "local"
+        }
+        fabric {
+            versionCode 1
+            versionName "0.0.1"
+            def flavorName = "fabric"
+        }
+        store {
+            versionCode 1
+            versionName "0.0.0"
+            def flavorName = "store"
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../keystores/.keystore")
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
+        }
+        preproduction {
+            storeFile file("../keystores/mbc_preproduction.jks")
+            storePassword "feuPZrYv0QCGc5Lj"
+            keyAlias "mbc_preproduction"
+            keyPassword "OU3skNGEwMneuGQ9"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            ext.enableCrashlytics = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "ga_trackingId", ""
+            signingConfig signingConfigs.release
+        }
+
+        preproduction {
+            applicationIdSuffix '.test'
+            minifyEnabled false
+            debuggable true
+            ext.enableCrashlytics = true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "ga_trackingId", ""
+            signingConfig signingConfigs.preproduction
+        }
+
+        debug {
+            minifyEnabled false
+            applicationIdSuffix '.dev'
+            ext.enableCrashlytics = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "ga_trackingId", ""
+        }
+    }
+    android.applicationVariants.all { variant ->
+        def varName = variant.name.capitalize()
+
+        def copyTask = tasks.create(name: "copyAPK${varName}", type: Copy) {
+            def date = new Date()
+            def formatedDate = date.format('ddMMyyyy')
+            def apkFinalName = appname.toLowerCase() + "_" +
+                    variant.getProperties().get("flavorName") +
+                    "_" +
+                    variant.versionName +
+                    "_" +
+                    formatedDate +
+                    ".apk"
+            def apkName = "app-${variant.getProperties().get("flavorName")}-${variant.buildType.name.toString()}.apk"
+
+            def destDir = new File(rootDir.path + File.separator + 'apks')
+            if (destDir.exists()) {
+                destDir.delete()
+            }
+            destDir.mkdirs()
+            from 'build/outputs/apk'
+            into destDir
+            include '*.apk'
+            rename { String fileName -> fileName.replace(apkName, apkFinalName)
+            }
+        }
+        variant.assemble.finalizedBy {
+            copyTask
+        }
+    }
+
+    project.gradle.taskGraph.whenReady {
+        connectedAndroidTest {
+            ignoreFailures = true
+        }
+    }
+}
+
+task fabricUpload << {
+    println System.getenv("FABRIC_UPLOAD")
+    if (System.getenv('FABRIC_UPLOAD') == 'true') {
+        println 'Uploading Fabric'
+        if (System.getenv('___FABRIC_NOTIFY_EMAIL___') != null) {
+            ext.betaDistributionEmails = System.getenv('___FABRIC_NOTIFY_EMAIL___')
+        }
+        crashlyticsUploadDistributionFabricPreproduction.execute()
+    } else {
+        println 'No uploading Fabric'
+    }
+}
+
+repositories {
+    flatDir {
+        dirs "libs"
+    }
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //Android Support
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:support-v4:24.2.1'
+    //Viewpager indicator
+    compile 'me.relex:circleindicator:1.2.2@aar'
+    //Crashlytics
+    compile('com.crashlytics.sdk.android:crashlytics:2.3.2@aar') {
+        transitive = true;
+    }
+    //Dagger
+    compile 'com.google.dagger:dagger:2.7'
+    apt 'com.google.dagger:dagger-compiler:2.7'
+    //Retrofit
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    //ButterKnife
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    //JobQueue
+    compile 'com.birbit:android-priority-jobqueue:1.3.5'
+    //Images
+    compile 'com.facebook.fresco:fresco:0.14.1'
+    //UnderActivity
+    compile 'com.underlegendz.underactivity:under-activity:1.1.1'
+    // Otto
+    compile 'com.squareup:otto:1.3.8'
+    //Testing
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.3.1'
+    androidTestApt 'com.google.dagger:dagger-compiler:2.7'
+    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    //Facebook
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    //Ripple effect
+    compile 'com.github.traex.rippleeffect:library:1.3'
+
+
+}

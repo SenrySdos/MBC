@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/book_list_fragment_background_repeat">
+
+    <ProgressBar
+        android:id="@+id/category_list.loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:id="@+id/category_list.container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0">
+
+        <View
+            android:id="@+id/book_list.top_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/shadow"
+            android:alpha="0" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/category_list.recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="56dp"
+            android:clipToPadding="false" />
+
+        <View
+            android:id="@+id/book_list.bottom_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_above="@+id/category_list.bottom_bar"
+            android:background="@drawable/shadow_inverse" />
+
+        <mbc.sdos.es.mbc.view.widget.bottombar.BottomBarView
+            android:id="@+id/category_list.bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MBC</string>
+
+<!-- typography-->
+
+    <string name="tipography_1_0">OpenSans-Bold.ttf</string>
+    <string name="tipography_1_1">OpenSans-Regular.ttf</string>
+    <string name="tipography_1_2">OpenSans-Semibold.ttf</string>
+    <string name="tipography_2_0">PT_Serif-Web-Bold.ttf</string>
+    <string name="tipography_2_1">PT_Serif-Web-BoldItalic.ttf</string>
+
+    <!-- BookDomain List -->
+    <string name="book_list.read_more">Read more ></string>
+
+    <!-- ERROR -->
+    <string name="default_error">Se ha producido un error.</string>
+    
+    <!-- Toolbar text -->
+    <string name="lastest_books">LATEST BOOKS</string>
+
+    <!-- Favourites -->
+    <string name="favorites">FAVORITES</string>
+
+</resources>
